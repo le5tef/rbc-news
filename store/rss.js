@@ -92,10 +92,9 @@ export const actions = {
     commit('setError', '');
     commit('setFeed', {});
     try {
-      const CORS_PROXY = "https://thingproxy.freeboard.io/fetch/"
-      const data = await fetch(CORS_PROXY + 'http://static.feed.rbc.ru/rbc/logical/footer/news.rss');
+      const data = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('http://static.feed.rbc.ru/rbc/logical/footer/news.rss')}`)
       if (data.ok) {
-        const text = await data.text();
+        const text = JSON.parse(await data.text()).contents;
         const parser = new RSSParser({
           customFields: {
             item: [
